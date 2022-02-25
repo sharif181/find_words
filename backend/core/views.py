@@ -22,7 +22,7 @@ class HomeView(APIView):
         return text_obj
 
     def get_words_and_word_data(self):
-        word_data_df = pd.read_csv(settings.BASE_DIR.joinpath('file_storage/word_data.csv'), ";")
+        word_data_df = pd.read_csv(settings.BASE_DIR.joinpath('file_storage/word_data.csv'), ";", encoding='utf-8')
         word_data_df = word_data_df.fillna('')
         words = list(word_data_df['word'])
         data = {}

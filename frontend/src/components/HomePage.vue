@@ -45,7 +45,13 @@
               <span v-else>No data</span>
             </li>
           </ul>
-          <button class="btn btn-primary">Button</button>
+          <div class="d-flex justify-content-start">
+            <button class="btn btn-secondary m-1">Normal</button>
+            <button class="btn btn-secondary m-1">Hard</button>
+            <button class="btn btn-secondary m-1">Easy</button>
+            <button class="btn btn-secondary m-1">Good</button>
+
+          </div>
         </div>
       </div>
     </div>
@@ -66,6 +72,7 @@ export default {
   },
   data() {
     return {
+      initialValue: true,
       text_obj: {},
       word_data: {},
       words: [],
@@ -82,12 +89,27 @@ export default {
             this.text_obj = res.data.text_obj
             this.word_data = res.data.word_data
             this.words = res.data.words
+            for (let word of this.text_obj.title) {
+              if (this.words.includes(word)) {
+                this.showInInfoArea(word)
+                this.initialValue = false
+                break
+              }
+            }
+            if (this.initialValue) {
+              for (let word of this.text_obj.lines) {
+                if (this.words.includes(word)) {
+                  this.showInInfoArea(word)
+                  this.initialValue = false
+                  break
+                }
+              }
+            }
           })
           .catch()
     },
     showInInfoArea(word) {
       this.selected_word = this.word_data[word]
-      console.log(this.selected_word)
     }
   }
 }
